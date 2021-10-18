@@ -1,0 +1,65 @@
+ Name: Aviel Shtern
+
+
+ SpreaderDetectorBackend
+ -----------------------------
+ Please explain how you dealt with the following parts of the exam.
+
+ First, I'm assumeing that the running time of the program has a lower bound of nlogn (Under the
+ comparison model).
+ This is because eventually we will have to Sort all the people by the probability that they are
+ infected.
+
+ Also during the explanation I modeled the problem to a graph where the people are the vertices 
+ (|V| = n) and the meetings between them are the edges. (In the graph representing the infection chain)
+
+ Input processing
+ ----------------
+ The people file: I'm going through the whole file (line by line - n lines) and in each line that I
+ read I create a struct that represent a person in the party. The struct contains the information 
+ about the person I picked up in the line.
+ I initialized the probability that he was infected to 0 (the presumption of innocence).
+ then I added the struct of the person information (the struct pointer more correctly. 
+ to save on copies, etc. also it will help with the sorting process) to an array that contains
+ all the people. This step will take O(n).
+
+ Sorting the array by ID: After I put all the people in the array, I sorted it with q-sort and
+ gave it a comparison function to sort by ID. I did this so I could search for a person in the array 
+ in O(logn)  time complexity (with binary search) instead of going over the entire array which will 
+ reasult in O(n) time complexity. This step of qsort would cost O(nlogn).
+
+ Meetings file: Note that each row (except the first row) represents a meeting - an edge in our model.
+ since there are no circles in this graph, then the graph has at most n + 1 such edges. That means 
+ there are at most n + 1  meetings. So you can just go line by line and find The infector and
+ infected in the sorted array and it will cost only O(nlogn) time.  
+ in every meeting I read I update the probability accordingly. (According to the probability
+ of the infector * crne function)
+ Therefore in conclusion this step will take O(nlogn).
+
+ To sum up: each stage of Input processing will run in time of O(nlogn).
+
+ Data storing
+ ------------
+ My main data structure through this program is an array of pointers to the person struct as 
+ I explaind before. It's O(n) place in memory. 
+ I used q-sort which is an in-place sorting algorithm therefor no additionl space was needed for
+ this step.
+
+ In conclusion I consumed only O (n) space for the entire length of the run. 
+ Which is the optimal place complexty given that we need to sort the people in order to write them 
+ to the output file.
+
+ Results sorting
+ ---------------
+ After reading the files I re-sorted the array with q-sort so this time I sent a comparison function
+ (I sorted from the largest To small for a change so that it is more comfortable to go over the array
+ at the end) according to the probability in which the man is infected. This step will take O (nlogn)
+ Finally, I went through the array again from beginning to end and printed the person in the output
+ file according to the instructions he needed. O (n)
+ 
+ To sum up: each stage of Results sorting will run in time of O(nlogn).
+ 
+ 
+ To summarize all the steps: Because the problem has a lower bound of O(nlogn) (Under the
+ comparison model. because, as I explained before, we must sort the people) and my solution has an
+ upper bound of O(nlogn) - my solution is optimal.
